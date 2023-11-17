@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <h1>Iniciar Sesión</h1>
+    <form id="loginForm">
+        <label for="nombre_usuario">Nombre de Usuario:</label>
+        <input type="text" name="nombre_usuario" id="nombre_usuario" required>
+        <br>
+
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" name="contrasena" id="contrasena" required>
+        <br>
+
+        <!-- Agrega un campo adicional, por ejemplo, correo electrónico -->
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" name="email" id="email" required>
+        <br>
+
+        <input type="submit" value="Iniciar Sesión">
+    </form>
+
+    <div id="mensaje"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#loginForm").submit(function(event) {
+                event.preventDefault();
+                let nombre_usuario=$("#nombre_usuario").val();
+                let contrasena=$("#contrasena").val();
+                let email=$("#email").val();
+                // Completa el código AJAX para enviar los datos del formulario al servidor y verificar la autenticación
+                $.ajax({
+                    type: "POST",
+                    url: "verificar_login.php", // Crea este archivo
+                    data:{
+                        nombre_usuario,
+                        contrasena,
+                        email
+                    },
+                    success: function(response) {
+                        $("#mensaje").html(response);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>Formulario de Registro</title>
+</head>
+<body>
+    <h1>Registro de Usuarios</h1>
+    <div id="message"></div>
+    <form id="login-form">
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" required>
+        <br>
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" name="apellido" id="apellido" required>
+        <br>
+
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" name="email" id="email" required>
+        <br>
+
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" name="telefono" id="telefono">
+        <br>
+
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" name="contrasena" id="contrasena" required>
+        <br>
+
+        <label for="confirmar_contrasena">Confirmar Contraseña:</label>
+        <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" required>
+        <br>
+
+        <label for="ciudad">Ciudad:</label>
+        <input type="text" name="ciudad" id="ciudad">
+        <br>
+
+        <!-- Agrega más campos de formulario según sea necesario -->
+
+        <input type="submit" value="Registrar">
+    </form>
+    <script>
+        $(document).ready(function () {
+  $("#login-form").submit(function (event) {
+    event.preventDefault();
+    let nombre = $("#nombre").val();
+    let apellido = $("#apellido").val();
+    let email = $("#email").val();
+    let telefono = $("#telefono").val();
+    let contrasena = $("#contrasena").val();
+    let confirmar_contrasena = $("#confirmar_contrasena").val();
+    let ciudad = $("#ciudad").val();
+
+    if (contrasena === confirmar_contrasena) {
+      $.ajax({
+        type: "POST",
+        url: "procesar_formulario.php",
+        data: {
+          nombre,
+          apellido,
+          email,
+          telefono,
+          contrasena,
+          ciudad
+        },
+        success: function (response) {
+          if (response === "Registro exitoso. Gracias por registrarte.") {
+            //alert('la respuesta fue correcta');
+            $("#message").html("Registro exitoso. Gracias por registrarte.");
+            setTimeout(function() {
+                $("#message").text("");
+            }, 5000)
+          } else {
+            $("#message").html("Error en el registro. Por favor, intenta de nuevo.");
+            setTimeout(function() {
+                $("#message").text("");
+            }, 5000)
+          }
+        },
+      });
+    }else{
+      alert("la contraseña no coinciden.");
+    }
+  });
+});
+
+    </script>
+</body>
+</html>
